@@ -1,5 +1,9 @@
 ### Revolutionizing Design-Bid-Build (DBB) Construction with Blockchain and zkSync: A Technical Overview
 
+
+![11-Tips-for-Effective-Construction-Site-Management-Procore-Blog-Hero-](https://github.com/user-attachments/assets/20fd0196-eddc-4a5e-89c2-adff661321b0)
+
+
 The construction industry is ripe for disruption. The traditional Design-Bid-Build (DBB) has been the source of construction Industry. Traditional Design-Bid-Build (DBB) methods often suffer from inefficiencies, disputes, and lack of transparency. Leveraging blockchain technology and Layer 2 scaling solutions like zkSync era can transform the way DBB projects are managed, making the process more secure, efficient, and transparent.
 
 In this technical article, we will not only explore the advantages of using blockchain and zkSync in DBB projects but also dive into the specifics of a smart contract implementation that automates the DBB process, ensuring smoother execution and minimizing disputes.
