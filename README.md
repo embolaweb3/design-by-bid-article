@@ -390,7 +390,7 @@ The DesignByBid smart contract can be deployed on zkSync to benefit from lower f
 1. **Compile the Smart Contract**: Ensure that your contract is compiled with no error. For easy compilation and deployment, you can check zksync documentations for various environments
     such as [Hardhat](https://docs.zksync.io/build/tooling/hardhat/getting-started) or [Foundry](https://docs.zksync.io/build/tooling/foundry/overview). zkSync uses Solidity, so no significant changes are necessary for basic contracts.
 
-3. **Deploy on zkSync Testnet**: Deploy your contract on the zkSync sepolia testnet to verify that everything works as expected. Depending on the environment you are using.w
+3. **Deploy on zkSync Testnet**: Deploy your contract on the zkSync sepolia testnet to verify that everything works as expected. Depending on the environment you are using it.
 
 
 #### Benefits of zkSync Deployment
@@ -405,4 +405,3 @@ The DesignByBid smart contract can be deployed on zkSync to benefit from lower f
 By integrating blockchain technology with zkSync, the DesignByBid smart contract revolutionizes the traditional DBB process. It automates key aspects such as bidding, milestone payments, and dispute resolution, ensuring that the entire process is transparent, efficient, and secure.
 
 
-If you're interested in implementing this system or have questions about the technical details, feel free to reach out!
