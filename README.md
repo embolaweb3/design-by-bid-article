@@ -257,6 +257,44 @@ contract DesignByBid {
     event DisputeResolved(uint disputeId, bool result);
 ```
 
+The `DesignByBid` contract facilitates a decentralized Design-Bid-Build (DBB) process. It manages **projects**, **bids**, and **disputes**, ensuring transparency and automation in construction projects.
+
+#### Key Structs:
+
+1. **`Project`**: Represents a construction project with:
+   - `id`: Unique project ID.
+   - `owner`: Address of the project owner.
+   - `description`, `budget`, `deadline`: Basic project details.
+   - `milestones`: Payment stages.
+   - `selectedBidder`: Address of the chosen contractor.
+   - `milestonePaid`: Track milestone payments.
+   - `disputeRaised`: Flags if a dispute is active.
+   - `active`: Indicates if the project is open for bidding.
+
+2. **`Bid`**: Represents a contractor's bid, including:
+   - `bidder`: Contractor's address.
+   - `bidAmount`: Amount requested to complete the project.
+   - `completionTime`: Estimated time to finish.
+   - `proposedMilestones`: Suggested payment breakdown.
+
+3. **`Dispute`**: Manages disputes through voting:
+   - `disputant`: Address raising the dispute.
+   - `votes`: Vote tally (yes/no).
+   - `resolved`: Marks if the dispute is resolved.
+
+#### Key Features:
+
+- **Project Posting**: Owners create projects with milestones.
+- **Bid Submission**: Contractors submit bids for projects.
+- **Bid Selection**: Owners choose the winning bid, deactivating further bids.
+- **Milestone Payments**: Owners release payments upon milestone completion.
+- **Dispute Resolution**: Disputes are resolved via on-chain voting.
+
+#### Events:
+
+- **ProjectPosted, BidSubmitted, BidSelected, MilestonePaid, DisputeRaised, DisputeResolved**: These events log significant actions for transparency and off-chain tracking.
+
+
 ### Key Features of the Smart Contract
 
 1. **Project Posting**
@@ -349,9 +387,10 @@ contract DesignByBid {
 The DesignByBid smart contract can be deployed on zkSync to benefit from lower fees and faster transactions. Here’s an outline of how you can deploy your smart contract on zkSync:
 
 
-1. **Compile the Smart Contract**: Ensure that your contract is compiled with no error. For easy compilation and deployment, you can check zksync documentations for various environments such as Foundry or Hardhat. zkSync uses Solidity, so no significant changes are necessary for basic contracts.
+1. **Compile the Smart Contract**: Ensure that your contract is compiled with no error. For easy compilation and deployment, you can check zksync documentations for various environments
+    such as [Hardhat](https://docs.zksync.io/build/tooling/hardhat/getting-started) or [Foundry](https://docs.zksync.io/build/tooling/foundry/overview). zkSync uses Solidity, so no significant changes are necessary for basic contracts.
 
-2. **Deploy on zkSync Testnet**: Deploy your contract on the zkSync sepolia testnet to verify that everything works as expected. Depending on the environment you are using.w
+3. **Deploy on zkSync Testnet**: Deploy your contract on the zkSync sepolia testnet to verify that everything works as expected. Depending on the environment you are using.w
 
 
 #### Benefits of zkSync Deployment
