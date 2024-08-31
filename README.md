@@ -565,5 +565,177 @@ To connect your Next.js frontend to the DesignByBid smart contract:
      export default MyApp;
      ```
 
-3. **Integrate Smart Contract Functions
+3. **Integrate Smart Contract Functions**:
+   - Create a new file `utils/contract.ts` to handle interactions with the smart contract:
+     ```tsx
+     import { Contract, ethers } from 'ethers';
+     import DesignByBidABI from './DesignByBidABI.json';
+
+     // Replace with your deployed contract address
+     const CONTRACT_ADDRESS = '0xYourContractAddressHere';
+
+     export const getContract = (provider) => {
+       const signer = provider.getSigner();
+       return new Contract(CONTRACT_ADDRESS, DesignByBidABI, signer);
+     };
+
+     export const fetchProjects = async (provider) => {
+       const contract = getContract(provider);
+       const projects = await contract.getAllProjects();
+       return projects.map((project) => ({
+         id: project.id.toString(),
+         description: project.description,
+         budget: ethers.utils.formatEther(project.budget),
+         deadline: project.deadline.toNumber(),
+         bids: project.bids.map((bid) => ({
+           bidder: bid.bidder,
+           bidAmount: ethers.utils.formatEther(bid.bidAmount),
+           completionTime: bid.completionTime.toNumber(),
+         })),
+         milestones: project.milestones,
+         milestonePaid: project.milestonePaid,
+       }));
+     };
+
+     export const submitBid = async (provider, projectId, bidAmount, completionTime) => {
+       const contract = getContract(provider);
+       const tx = await contract.submitBid(
+         projectId,
+         ethers.utils.parseEther(bidAmount),
+         completionTime
+       );
+       await tx.wait();
+     };
+
+     export const releaseMilestonePayment = async (provider, projectId, milestoneIndex) => {
+       const contract = getContract(provider);
+       const tx = await contract.releaseMilestonePayment(projectId, milestoneIndex);
+       await tx.wait();
+     };
+     ```
+
+4. **Fetching Projects**:
+   - Update the `pages/index.tsx` to fetch and display projects using the `fetchProjects` function:
+     ```tsx
+     import { useEffect, useState } from 'react';
+     import { useWeb3React } from '@web3-react/core';
+     import { fetchProjects } from '../utils/contract';
+     import ProjectList from '../components/ProjectList';
+
+     const Home = () => {
+       const { library } = useWeb3React();
+       const [projects, setProjects] = useState([]);
+
+       useEffect(() => {
+         if (library) {
+           fetchProjects(library).then(setProjects);
+         }
+       }, [library]);
+
+       return (
+         <div className="container mx-auto">
+           <h1 className="text-3xl font-bold mb-6">DesignByBid Projects</h1>
+           <ProjectList projects={projects} />
+         </div>
+       );
+     };
+
+     export default Home;
+     ```
+
+5. **Submitting a Bid**:
+   - In `components/ProjectDetails.tsx`, add a form for submitting bids:
+     ```tsx
+     import React from 'react';
+     import { useWeb3React } from '@web3-react/core';
+     import BidForm from './BidForm';
+     import { submitBid } from '../utils/contract';
+
+     const ProjectDetails = ({ project }) => {
+       const { library } = useWeb3React();
+
+       const handleBidSubmit = async ({ bidAmount, completionTime }) => {
+         await submitBid(library, project.id, bidAmount, completionTime);
+         // Optionally refresh project details after bidding
+       };
+
+       return (
+         <div className="p-4 border rounded-lg shadow-md">
+           <h2 className="text-2xl font-bold">{project.description}</h2>
+           <p>Budget: {project.budget}</p>
+           <p>Deadline: {new Date(project.deadline).toLocaleDateString()}</p>
+           <h3 className="mt-4 text-xl font-bold">Bids:</h3>
+           <ul>
+             {project.bids.map((bid, index) => (
+               <li key={index}>
+                 Bid by {bid.bidder}: {bid.bidAmount} - Completion Time: {bid.completionTime} days
+               </li>
+             ))}
+           </ul>
+
+           <BidForm onSubmit={handleBidSubmit} />
+         </div>
+       );
+     };
+
+     export default ProjectDetails;
+     ```
+
+6. **Releasing Milestone Payments**:
+   - In the same `components/ProjectDetails.tsx`, add a button to release milestone payments:
+     ```tsx
+     import React from 'react';
+     import { useWeb3React } from '@web3-react/core';
+     import { releaseMilestonePayment } from '../utils/contract';
+
+     const ProjectDetails = ({ project }) => {
+       const { library } = useWeb3React();
+
+       const handleReleasePayment = async (milestoneIndex) => {
+         await releaseMilestonePayment(library, project.id, milestoneIndex);
+         // Optionally refresh project details after releasing payment
+       };
+
+       return (
+         <div className="p-4 border rounded-lg shadow-md">
+           <h2 className="text-2xl font-bold">{project.description}</h2>
+           <p>Budget: {project.budget}</p>
+           <p>Deadline: {new Date(project.deadline).toLocaleDateString()}</p>
+           <h3 className="mt-4 text-xl font-bold">Bids:</h3>
+           <ul>
+             {project.bids.map((bid, index) => (
+               <li key={index}>
+                 Bid by {bid.bidder}: {bid.bidAmount} - Completion Time: {bid.completionTime} days
+               </li>
+             ))}
+           </ul>
+
+           <h3 className="mt-4 text-xl font-bold">Milestones:</h3>
+           <ul>
+             {project.milestones.map((milestone, index) => (
+               <li key={index}>
+                 Milestone {index + 1}: {milestone} - Paid: {project.milestonePaid[index] ? "Yes" : "No"}
+                 {!project.milestonePaid[index] && (
+                   <button
+                     className="ml-4 p-2 bg-green-500 text-white rounded-lg"
+                     onClick={() => handleReleasePayment(index)}
+                   >
+                     Release Payment
+                   </button>
+                 )}
+               </li>
+             ))}
+           </ul>
+         </div>
+       );
+     };
+
+     export default ProjectDetails;
+     ```
+
+### Conclusion
+
+By integrating blockchain technology and zkSync with the traditional Design-Bid-Build (DBB) process, we can revolutionize construction project management. The smart contract ensures transparency, reduces disputes, and automates key processes such as bid submissions and milestone payments. The Next.js frontend offers an intuitive interface for interacting with the smart contract, allowing project owners and contractors to manage projects efficiently and securely.
+
+This project is just the beginning of what's possible when combining blockchain with construction. The future is bright, and this project is a step towards a more efficient, transparent, and automated construction industry.
 
