@@ -1,14 +1,32 @@
-### Revolutionizing Design-Bid-Build (DBB) Construction with Blockchain and zkSync: A Technical Overview
-
+# Revolutionizing Design-Bid-Build (DBB) Construction with Blockchain and zkSync: A Technical Overview
 
 ![11-Tips-for-Effective-Construction-Site-Management-Procore-Blog-Hero-](https://github.com/user-attachments/assets/20fd0196-eddc-4a5e-89c2-adff661321b0)
 
+## Table of Contents
+1. [Introduction](#introduction)
+2. [The Challenges of Traditional DBB Construction](#the-challenges-of-traditional-dbb-construction)
+3. [Leveraging Blockchain in DBB Projects](#leveraging-blockchain-in-dbb-projects)
+4. [zkSync: Solving Scalability and Cost Issues](#zksync-solving-scalability-and-cost-issues)
+5. [The DesignByBid Smart Contract: A Technical Breakdown](#the-designbybid-smart-contract-a-technical-breakdown)
+   - [Key Structs](#key-structs)
+   - [Key Features](#key-features)
+   - [Events](#events)
+6. [Deploying on zkSync Era Sepolia Testnet](#deploying-on-zksync-era-sepolia-testnet)
+7. [Frontend Implementation using Next.js, TypeScript, and TailwindCSS](#frontend-implementation-using-nextjs-typescript-and-tailwindcss)
+   - [Setting Up the Next.js Project](#setting-up-the-nextjs-project)
+   - [Creating the User Interface](#creating-the-user-interface)
+   - [Connecting to the Smart Contract](#connecting-to-the-smart-contract)
+8. [Conclusion](#conclusion)
 
-The construction industry is ripe for disruption. The traditional Design-Bid-Build (DBB) has been the source of construction Industry. Traditional Design-Bid-Build (DBB) methods often suffer from inefficiencies, disputes, and lack of transparency. Leveraging blockchain technology and Layer 2 scaling solutions like zkSync era can transform the way DBB projects are managed, making the process more secure, efficient, and transparent.
+---
 
-In this technical article, we will not only explore the advantages of using blockchain and zkSync in DBB projects but also dive into the specifics of a smart contract implementation that automates the DBB process, ensuring smoother execution and minimizing disputes.
+## Introduction
 
-#### The Challenges of Traditional DBB Construction
+The construction industry is ripe for disruption. The traditional Design-Bid-Build (DBB) method has been the cornerstone of construction, but it often suffers from inefficiencies, disputes, and lack of transparency. Leveraging blockchain technology and Layer 2 scaling solutions like zkSync era can transform how DBB projects are managed, making the process more secure, efficient, and transparent.
+
+In this technical article, we will explore the advantages of using blockchain and zkSync in DBB projects and dive into the specifics of a smart contract implementation that automates the DBB process, ensuring smoother execution and minimizing disputes.
+
+## The Challenges of Traditional DBB Construction
 
 The Design-Bid-Build process typically involves three stages:
 1. **Design**: The project owner hires an architect or designer to create a blueprint for the project.
@@ -22,14 +40,15 @@ While effective, this process has several pain points:
 
 Blockchain technology addresses these challenges by introducing decentralization, transparency, and automation through smart contracts.
 
-#### Leveraging Blockchain in DBB Projects
+## Leveraging Blockchain in DBB Projects
 
 Blockchain provides a decentralized and transparent platform where all transactions are recorded immutably. Smart contracts enable the automation of payments, dispute resolution, and other contractual obligations. Here's how blockchain improves the DBB process:
 - **Transparency**: All bids, payments, and disputes are recorded on the blockchain, ensuring that no party can alter or tamper with the data.
 - **Automation**: Smart contracts automatically execute payments when predefined conditions are met, eliminating the need for manual processing.
 - **Security**: Blockchain's decentralized nature ensures that no single entity can manipulate the system, reducing the risk of fraud.
 
-#### zkSync: Solving Scalability and Cost Issues
+## zkSync: Solving Scalability and Cost Issues
+
 
 One challenge with using blockchain for DBB projects is the cost and speed of transactions. On Ethereum’s Layer 1, transaction fees can be high, and network congestion can lead to delays. This is where zkSync, a Layer 2 scaling solution, comes into play.
 
@@ -40,9 +59,7 @@ zkSync leverages zero-knowledge rollups to batch transactions off-chain and then
 
 Now, let’s take a look at how the DesignByBid (DBB) smart contract integrates blockchain and zkSync to automate the DBB process.
 
----
-
-### The DesignByBid Smart Contract: A Technical Breakdown
+## The DesignByBid Smart Contract: A Technical Breakdown
 
 The DesignByBid smart contract automates the DBB process, ensuring that every step, from project posting to bidding and milestone payments, is handled securely and transparently. Below is the complete smart contract that will be using in this article. You can check this ([repo](https://github.com/embolaweb3/design-by-bid)) for complete source code. 
 
@@ -259,7 +276,8 @@ contract DesignByBid {
 
 The `DesignByBid` contract facilitates a decentralized Design-Bid-Build (DBB) process. It manages **projects**, **bids**, and **disputes**, ensuring transparency and automation in construction projects.
 
-#### Key Structs:
+
+### Key Structs
 
 1. **`Project`**: Represents a construction project with:
    - `id`: Unique project ID.
@@ -282,20 +300,7 @@ The `DesignByBid` contract facilitates a decentralized Design-Bid-Build (DBB) pr
    - `votes`: Vote tally (yes/no).
    - `resolved`: Marks if the dispute is resolved.
 
-#### Key Features:
-
-- **Project Posting**: Owners create projects with milestones.
-- **Bid Submission**: Contractors submit bids for projects.
-- **Bid Selection**: Owners choose the winning bid, deactivating further bids.
-- **Milestone Payments**: Owners release payments upon milestone completion.
-- **Dispute Resolution**: Disputes are resolved via on-chain voting.
-
-#### Events:
-
-- **ProjectPosted, BidSubmitted, BidSelected, MilestonePaid, DisputeRaised, DisputeResolved**: These events log significant actions for transparency and off-chain tracking.
-
-
-### Key Features of the Smart Contract
+### Key Features
 
 1. **Project Posting**
     - The `postProject` function allows the project owner to post a new construction project, defining the project description, budget, deadline, and payment milestones.
@@ -382,7 +387,12 @@ The `DesignByBid` contract facilitates a decentralized Design-Bid-Build (DBB) pr
 
 ---
 
-### Deploying on ZkSync Era Sepolia Testnet
+### Events
+
+- **ProjectPosted, BidSubmitted, BidSelected, MilestonePaid, DisputeRaised, DisputeResolved**: These events log significant actions for transparency and off-chain tracking.
+
+## Deploying on zkSync Era Sepolia Testnet
+
 
 The DesignByBid smart contract can be deployed on zkSync to benefit from lower fees and faster transactions. Here’s an outline of how you can deploy your smart contract on zkSync:
 
@@ -393,15 +403,167 @@ The DesignByBid smart contract can be deployed on zkSync to benefit from lower f
 3. **Deploy on zkSync Testnet**: Deploy your contract on the zkSync sepolia testnet to verify that everything works as expected. Depending on the environment you are using it.
 
 
-#### Benefits of zkSync Deployment
-- **Cost-Effective Execution**: zkSync reduces gas fees, making your smart contracts more affordable for users.
-- **Speed**: Faster transaction finality ensures that project milestones and payments are processed quickly.
-- **Scalability**: zkSync can handle a large number of transactions without congestion, ensuring that even large-scale construction projects can operate smoothly.
+## Frontend Implementation using Next.js, TypeScript, and TailwindCSS
 
----
+### Setting Up the Next.js Project
 
-### Conclusion
+To build the frontend for the DesignByBid smart contract, we will use Next.js with TypeScript and TailwindCSS for styling.
 
-By integrating blockchain technology with zkSync, the DesignByBid smart contract revolutionizes the traditional DBB process. It automates key aspects such as bidding, milestone payments, and dispute resolution, ensuring that the entire process is transparent, efficient, and secure.
+ **Initialize the Next.js Project**:
+   - Run the following commands to set up a new Next.js project with TypeScript and Tailwindcss by:
+   - Ensure you select Yes to use `Tailwind CSS` and `Typescript`
+     ```bash
+     npx create-next-app@latest designbybid-frontend
+     cd designbybid-frontend
+     ```
 
+### Creating the User Interface
+
+The user interface will include the following components:
+- **Project List**: Display a list of projects that users can view and bid on.
+- **Project Details**: Show details for a selected project, including the bids submitted and the milestones set.
+- **Bid Submission Form**: Allow contractors to submit bids for projects.
+- **Milestone Payment**: Let project owners release payments for completed milestones.
+
+1. **Project List Component**:
+   - Create a new file `components/ProjectList.tsx`:
+     ```tsx
+     import React from 'react';
+
+     const ProjectList = ({ projects }) => {
+       return (
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+           {projects.map(project => (
+             <div key={project.id} className="p-4 border rounded-lg shadow-md">
+               <h3 className="text-xl font-bold">{project.description}</h3>
+               <p>Budget: {project.budget}</p>
+               <p>Deadline: {new Date(project.deadline).toLocaleDateString()}</p>
+               <button className="mt-2 p-2 bg-blue-500 text-white rounded-lg">
+                 View Details
+               </button>
+             </div>
+           ))}
+         </div>
+       );
+     };
+
+     export default ProjectList;
+     ```
+
+2. **Project Details Component**:
+   - Create a new file `components/ProjectDetails.tsx`:
+     ```tsx
+     import React from 'react';
+
+     const ProjectDetails = ({ project }) => {
+       return (
+         <div className="p-4 border rounded-lg shadow-md">
+           <h2 className="text-2xl font-bold">{project.description}</h2>
+           <p>Budget: {project.budget}</p>
+           <p>Deadline: {new Date(project.deadline).toLocaleDateString()}</p>
+           <h3 className="mt-4 text-xl font-bold">Bids:</h3>
+           <ul>
+             {project.bids.map((bid, index) => (
+               <li key={index}>
+                 Bid by {bid.bidder}: {bid.bidAmount} - Completion Time: {bid.completionTime}
+               </li>
+             ))}
+           </ul>
+           <h3 className="mt-4 text-xl font-bold">Milestones:</h3>
+           <ul>
+             {project.milestones.map((milestone, index) => (
+               <li key={index}>
+                 Milestone {index + 1}: {milestone} - Paid: {project.milestonePaid[index] ? "Yes" : "No"}
+               </li>
+             ))}
+           </ul>
+           <button className="mt-4 p-2 bg-green-500 text-white rounded-lg">
+             Release Milestone Payment
+           </button>
+         </div>
+       );
+     };
+
+     export default ProjectDetails;
+     ```
+
+3. **Bid Submission Form**:
+   - Create a new file `components/BidForm.tsx`:
+     ```tsx
+     import React, { useState } from 'react';
+
+     const BidForm = ({ onSubmit }) => {
+       const [bidAmount, setBidAmount] = useState('');
+       const [completionTime, setCompletionTime] = useState('');
+
+       const handleSubmit = (e) => {
+         e.preventDefault();
+         onSubmit({ bidAmount, completionTime });
+       };
+
+       return (
+         <form onSubmit={handleSubmit} className="p-4 border rounded-lg shadow-md">
+           <div className="mb-4">
+             <label className="block text-sm font-bold mb-2">Bid Amount</label>
+             <input
+               type="number"
+               value={bidAmount}
+               onChange={(e) => setBidAmount(e.target.value)}
+               className="p-2 border rounded-lg w-full"
+               required
+             />
+           </div>
+           <div className="mb-4">
+             <label className="block text-sm font-bold mb-2">Completion Time (days)</label>
+             <input
+               type="number"
+               value={completionTime}
+               onChange={(e) => setCompletionTime(e.target.value)}
+               className="p-2 border rounded-lg w-full"
+               required
+             />
+           </div>
+           <button type="submit" className="p-2 bg-blue-500 text-white rounded-lg">
+             Submit Bid
+           </button>
+         </form>
+       );
+     };
+
+     export default BidForm;
+     ```
+
+### Connecting to the Smart Contract
+
+To connect your Next.js frontend to the DesignByBid smart contract:
+
+1. **Install Web3 Dependencies**:
+   - Run the following command to install `ethers` and `web3-react`:
+     ```bash
+     npm install ethers @web3-react/core
+     ```
+
+2. **Create a Web3 Provider**:
+   - Set up a Web3 provider in `pages/_app.tsx`:
+     ```tsx
+     import { Web3ReactProvider } from '@web3-react/core';
+     import { Web3Provider } from '@ethersproject/providers';
+     import '../styles/globals.css';
+
+     function getLibrary(provider) {
+       return new Web3Provider(provider);
+     }
+
+     function MyApp({ Component, pageProps }) {
+       return (
+         <Web3ReactProvider getLibrary={getLibrary}>
+           <Component {...pageProps} />
+         </Web3ReactProvider>
+       );
+     }
+
+     export default MyApp;
+     ```
+
+3. **Integrate Smart Contract Functions
 
